@@ -1,16 +1,59 @@
-## Hi there 👋
+# Célia Charlot
 
-<!--
-**Brouev/Brouev** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+Développeuse web en formation intéressée par le Cloud et les pratiques DevOps.  
+Je travaille principalement sur des projets web full-stack et je m’intéresse particulièrement au déploiement d’applications, à la conteneurisation et aux environnements Linux.
 
-Here are some ideas to get you started:
+## Technologies
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+HTML • CSS • JavaScript  
+PHP  
+MySQL / MariaDB  
+
+Docker  
+Git  
+Linux (CLI)
+
+## Connaissances complémentaires
+
+Python (notions)  
+C (notions)
+
+## Projets
+
+### Application web full-stack
+Application web avec authentification des utilisateurs et gestion de base de données.
+
+Technologies utilisées :
+- PHP
+- MySQL / MariaDB
+- JavaScript
+- HTML / CSS
+
+Fonctionnalités :
+- gestion des utilisateurs
+- authentification
+- opérations CRUD
+
+### Déploiement d'application conteneurisée
+Projet de déploiement d'une application web avec Docker.
+
+Technologies utilisées :
+- Docker
+- Linux
+- Git
+
+Fonctionnalités :
+- conteneurisation de l'application
+- configuration de l'environnement
+- déploiement via Docker
+
+## En apprentissage
+
+- Python
+- Cloud computing
+- pratiques DevOps
+
+## Me contacter
+
+LinkedIn : https://linkedin.com/in/célia-charlot  
+GitHub : https://github.com/Brouev
