@@ -21,13 +21,11 @@ Je travaille principalement sur des projets web full-stack et je m’intéresse 
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 
 ---
-
 ## GitHub Stats
 
-![GitHub stats](https://github-readme-stats.vercel.app/api?username=Brouev&show_icons=true&count_private=true&theme=tokyonight)
+![GitHub stats](https://github-readme-stats.vercel.app/api?username=Brouev&show_icons=true&count_private=true&include_all_commits=true&theme=tokyonight)
 
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Brouev&layout=compact&theme=tokyonight)
-
 ---
 
 ## Projects
