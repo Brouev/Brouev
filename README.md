@@ -24,7 +24,7 @@ Je travaille principalement sur des projets web full-stack et je m’intéresse 
 
 ## GitHub Stats
 
-![GitHub stats](https://github-readme-stats.vercel.app/api?username=Brouev&show_icons=true&theme=tokyonight)
+![GitHub stats](https://github-readme-stats.vercel.app/api?username=Brouev&show_icons=true&count_private=true&theme=tokyonight)
 
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Brouev&layout=compact&theme=tokyonight)
 
@@ -76,7 +76,7 @@ Fonctionnalités :
 ## Contact
 
 LinkedIn  
-https://linkedin.com/in/célia-charlot
+https://linkedin.com/in/célia-charlot  
 
 GitHub  
 https://github.com/Brouev
