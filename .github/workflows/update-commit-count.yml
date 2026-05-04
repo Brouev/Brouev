@@ -23,8 +23,6 @@ jobs:
       - name: Count commits across repositories
         env:
           GH_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
-          GITHUB_USERNAME: Brouev
-          AUTHOR_PATTERN: "Brouev|c.charlot333@gmail.com|c.charlot333|Célia|Celia"
         run: |
           set -e
 
@@ -35,6 +33,9 @@ jobs:
 
           repos=$(gh api --paginate "/user/repos?per_page=100&affiliation=owner,collaborator" --jq '.[] | select(.fork == false) | .full_name')
 
+          echo "Repositories found:"
+          echo "$repos"
+
           for repo in $repos; do
             echo "----------------------------------------"
             echo "Checking $repo"
@@ -44,12 +45,9 @@ jobs:
             if git clone --quiet "https://x-access-token:${GH_TOKEN}@github.com/${repo}.git" "$folder"; then
               cd "$folder"
 
-              echo "Authors found in $repo:"
-              git log --all --format='%an <%ae>' | sort | uniq || true
+              count=$(git rev-list --all --count)
 
-              count=$(git log --all --author="$AUTHOR_PATTERN" --oneline | wc -l | tr -d ' ')
-
-              echo "$repo: $count commits matching pattern: $AUTHOR_PATTERN"
+              echo "$repo: $count commits"
 
               TOTAL=$((TOTAL + count))
 
