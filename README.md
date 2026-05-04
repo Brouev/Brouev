@@ -1,8 +1,8 @@
 # Célia Charlot
 
-Développeuse web en formation intéressée par le Cloud et les pratiques DevOps.
+Développeuse web en formation, intéressée par le Cloud, le DevOps et le développement applicatif.
 
-Je travaille principalement sur des projets web full-stack et je m’intéresse particulièrement au déploiement d’applications, à la conteneurisation et aux environnements Linux.
+Je travaille principalement sur des projets web full-stack et je m’intéresse particulièrement au déploiement d’applications, à la conteneurisation, aux environnements Linux et aux pratiques DevOps.
 
 ---
 
@@ -13,29 +13,46 @@ Je travaille principalement sur des projets web full-stack et je m’intéresse 
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
 ![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![Symfony](https://img.shields.io/badge/Symfony-000000?style=for-the-badge&logo=symfony&logoColor=white)
 
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)
 
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 
 ---
+
+## Learning
+
+![Java](https://img.shields.io/badge/Java-En%20cours%20d'apprentissage-red?style=for-the-badge&logo=openjdk&logoColor=white)
+![Angular](https://img.shields.io/badge/Angular-En%20cours%20d'apprentissage-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![Python](https://img.shields.io/badge/Python-En%20cours%20d'apprentissage-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Cloud](https://img.shields.io/badge/Cloud%20Computing-En%20cours%20d'apprentissage-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
+![DevOps](https://img.shields.io/badge/DevOps-En%20cours%20d'apprentissage-0A66C2?style=for-the-badge)
+
+---
+
 ## GitHub Stats
 
-![GitHub stats](https://github-readme-stats.vercel.app/api?username=Brouev&show_icons=true&count_private=true&include_all_commits=true&theme=tokyonight)
+<p align="center">
+  <img src="https://TON-INSTANCE-VERCEL.vercel.app/api?username=Brouev&show_icons=true&count_private=true&include_all_commits=true" height="165" alt="GitHub stats de Célia" />
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://TON-INSTANCE-VERCEL.vercel.app/api/top-langs/?username=Brouev&layout=compact&count_private=true" height="165" alt="Langages les plus utilisés par Célia" />
+</p>
 
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Brouev&layout=compact&theme=tokyonight)
 ---
 
 ## Projects
 
-### Web application (Full-stack)
+### Web application | Full-stack
 
-Application web avec authentification des utilisateurs et gestion de base de données.
+Application web avec authentification des utilisateurs, gestion des rôles et base de données relationnelle.
 
 Technologies :
 - PHP
+- Symfony
 - MySQL / MariaDB
 - JavaScript
 - HTML / CSS
@@ -44,6 +61,7 @@ Fonctionnalités :
 - gestion des utilisateurs
 - authentification
 - opérations CRUD
+- structuration d'une base de données relationnelle
 
 ---
 
@@ -60,14 +78,18 @@ Fonctionnalités :
 - conteneurisation de l'application
 - configuration de l'environnement
 - déploiement avec Docker
+- versioning avec Git
 
 ---
 
 ## Currently learning
 
+- Java
+- Angular
 - Python
 - Cloud computing
 - DevOps practices
+- Networking fundamentals
 
 ---
 
