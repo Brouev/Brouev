@@ -1,13 +1,16 @@
 name: Update commit count
 
 on:
-  push:
   workflow_dispatch:
   schedule:
     - cron: "0 8 * * *"
 
 permissions:
   contents: write
+
+concurrency:
+  group: update-commit-count
+  cancel-in-progress: true
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -19,6 +22,8 @@ jobs:
     steps:
       - name: Checkout profile repository
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Count commits across selected repositories
         env:
@@ -31,17 +36,6 @@ jobs:
 
           TOTAL=0
 
-          EXCLUDED_REPOS="
-          Brouev/github-readme-stats
-          laplateformeio/mediatheque_toulouse_grp1
-          laplateformeio/mediatheque_toulouse_grp2
-          laplateformeio/mediatheque_toulouse_grp3
-          laplateformeio/mediatheque_toulouse_grp4
-          laplateformeio/mediatheque_toulouse_grp5
-          laplateformeio/mediatheque_toulouse_grp6
-          laplateformeio/mediatheque_toulouse_grp7
-          "
-
           repos=$(gh api --paginate "/user/repos?per_page=100&affiliation=owner,collaborator,organization_member" \
             --jq '.[] | .full_name')
 
@@ -50,11 +44,18 @@ jobs:
           echo "----------------------------------------"
 
           for repo in $repos; do
-            if echo "$EXCLUDED_REPOS" | grep -qx "          $repo"; then
-              echo "Skipping excluded repo: $repo"
-              echo "----------------------------------------"
-              continue
-            fi
+            case "$repo" in
+              */github-readme-stats)
+                echo "Skipping excluded repo: $repo"
+                echo "----------------------------------------"
+                continue
+                ;;
+              laplateformeio/mediatheque_toulouse_grp*)
+                echo "Skipping excluded repo: $repo"
+                echo "----------------------------------------"
+                continue
+                ;;
+            esac
 
             echo "Checking $repo"
 
@@ -122,5 +123,6 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Update commit count"
+            git pull --rebase origin main
             git push
           fi
