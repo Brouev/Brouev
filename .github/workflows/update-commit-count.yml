@@ -9,6 +9,9 @@ on:
 permissions:
   contents: write
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   update-commit-count:
     runs-on: ubuntu-latest
@@ -21,7 +24,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
           GITHUB_USERNAME: Brouev
-          AUTHOR_PATTERN: "c.charlot333@gmail.com|Brouev|Celia|Célia"
+          AUTHOR_PATTERN: "Brouev|c.charlot333@gmail.com|c.charlot333|Célia|Celia"
         run: |
           set -e
 
@@ -33,6 +36,7 @@ jobs:
           repos=$(gh api --paginate "/user/repos?per_page=100&affiliation=owner,collaborator" --jq '.[] | select(.fork == false) | .full_name')
 
           for repo in $repos; do
+            echo "----------------------------------------"
             echo "Checking $repo"
 
             folder=$(echo "$repo" | tr '/' '_')
@@ -40,8 +44,12 @@ jobs:
             if git clone --quiet "https://x-access-token:${GH_TOKEN}@github.com/${repo}.git" "$folder"; then
               cd "$folder"
 
+              echo "Authors found in $repo:"
+              git log --all --format='%an <%ae>' | sort | uniq || true
+
               count=$(git log --all --author="$AUTHOR_PATTERN" --oneline | wc -l | tr -d ' ')
-              echo "$repo: $count commits"
+
+              echo "$repo: $count commits matching pattern: $AUTHOR_PATTERN"
 
               TOTAL=$((TOTAL + count))
 
@@ -51,6 +59,8 @@ jobs:
             fi
           done
 
+          echo "----------------------------------------"
+          echo "TOTAL_COMMITS=$TOTAL"
           echo "TOTAL_COMMITS=$TOTAL" >> "$GITHUB_ENV"
 
       - name: Update README
