@@ -43,19 +43,48 @@ jobs:
           echo "$repos"
           echo "----------------------------------------"
 
-          for repo in $repos; do
+          should_skip_repo() {
+            repo="$1"
+
             case "$repo" in
-              */github-readme-stats)
-                echo "Skipping excluded repo: $repo"
-                echo "----------------------------------------"
-                continue
+              *github-readme-stats*)
+                return 0
                 ;;
-              laplateformeio/mediatheque_toulouse_grp*)
-                echo "Skipping excluded repo: $repo"
-                echo "----------------------------------------"
-                continue
+              laplateformeio/mediatheque_toulouse_grp1)
+                return 0
+                ;;
+              laplateformeio/mediatheque_toulouse_grp2)
+                return 0
+                ;;
+              laplateformeio/mediatheque_toulouse_grp3)
+                return 0
+                ;;
+              laplateformeio/mediatheque_toulouse_grp4)
+                return 0
+                ;;
+              laplateformeio/mediatheque_toulouse_grp5)
+                return 0
+                ;;
+              laplateformeio/mediatheque_toulouse_grp6)
+                return 0
+                ;;
+              laplateformeio/mediatheque_toulouse_grp7)
+                return 0
+                ;;
+              *)
+                return 1
                 ;;
             esac
+          }
+
+          for repo in $repos; do
+            echo "Repo detected: [$repo]"
+
+            if should_skip_repo "$repo"; then
+              echo "Skipping excluded repo: $repo"
+              echo "----------------------------------------"
+              continue
+            fi
 
             echo "Checking $repo"
 
