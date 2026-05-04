@@ -1,0 +1,91 @@
+name: Update commit count
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 8 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update-commit-count:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout profile repository
+        uses: actions/checkout@v4
+
+      - name: Count commits across repositories
+        env:
+          GH_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
+          GITHUB_USERNAME: Brouev
+          AUTHOR_PATTERN: "c.charlot333@gmail.com|Brouev|Célia|Celia"
+        run: |
+          set -e
+
+          mkdir -p /tmp/repos
+          cd /tmp/repos
+
+          TOTAL=0
+
+          repos=$(gh api --paginate "/user/repos?per_page=100&affiliation=owner,collaborator" \
+            --jq '.[] | select(.fork == false) | .full_name')
+
+          for repo in $repos; do
+            echo "Checking $repo"
+
+            folder=$(echo "$repo" | tr '/' '_')
+
+            git clone --quiet "https://x-access-token:${GH_TOKEN}@github.com/${repo}.git" "$folder" || continue
+
+            cd "$folder"
+
+            count=$(git log --all --author="$AUTHOR_PATTERN" --oneline | wc -l | tr -d ' ')
+
+            echo "$repo: $count commits"
+
+            TOTAL=$((TOTAL + count))
+
+            cd ..
+          done
+
+          echo "TOTAL_COMMITS=$TOTAL" >> $GITHUB_ENV
+
+      - name: Update README
+        run: |
+          python3 << 'PY'
+          import os
+          from pathlib import Path
+
+          total = os.environ["TOTAL_COMMITS"]
+
+          readme_path = Path("README.md")
+          content = readme_path.read_text(encoding="utf-8")
+
+          start = "<!-- COMMIT-COUNT:START -->"
+          end = "<!-- COMMIT-COUNT:END -->"
+
+          new_block = f"""{start}
+![Commits](https://img.shields.io/badge/Commits-{total}-blue?style=for-the-badge&logo=github)
+{end}"""
+
+          before = content.split(start)[0]
+          after = content.split(end)[1]
+
+          readme_path.write_text(before + new_block + after, encoding="utf-8")
+          PY
+
+      - name: Commit README update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add README.md
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update commit count"
+            git push
+          fi
