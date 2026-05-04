@@ -20,7 +20,7 @@ jobs:
       - name: Checkout profile repository
         uses: actions/checkout@v5
 
-      - name: Count commits across repositories
+      - name: Count commits across all accessible repositories
         env:
           GH_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
         run: |
@@ -31,19 +31,22 @@ jobs:
 
           TOTAL=0
 
-          repos=$(gh api --paginate "/user/repos?per_page=100&affiliation=owner,collaborator" --jq '.[] | select(.fork == false) | .full_name')
+          repos=$(gh api --paginate "/user/repos?per_page=100&affiliation=owner,collaborator,organization_member" \
+            --jq '.[] | .full_name')
 
           echo "Repositories found:"
           echo "$repos"
+          echo "----------------------------------------"
 
           for repo in $repos; do
-            echo "----------------------------------------"
             echo "Checking $repo"
 
             folder=$(echo "$repo" | tr '/' '_')
 
             if git clone --quiet "https://x-access-token:${GH_TOKEN}@github.com/${repo}.git" "$folder"; then
               cd "$folder"
+
+              git fetch --all --quiet --tags
 
               count=$(git rev-list --all --count)
 
@@ -55,9 +58,10 @@ jobs:
             else
               echo "Could not clone $repo"
             fi
+
+            echo "----------------------------------------"
           done
 
-          echo "----------------------------------------"
           echo "TOTAL_COMMITS=$TOTAL"
           echo "TOTAL_COMMITS=$TOTAL" >> "$GITHUB_ENV"
 
