@@ -20,7 +20,7 @@ jobs:
       - name: Checkout profile repository
         uses: actions/checkout@v5
 
-      - name: Count commits across all accessible repositories
+      - name: Count commits across selected repositories
         env:
           GH_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
         run: |
@@ -31,6 +31,17 @@ jobs:
 
           TOTAL=0
 
+          EXCLUDED_REPOS="
+          Brouev/github-readme-stats
+          laplateformeio/mediatheque_toulouse_grp1
+          laplateformeio/mediatheque_toulouse_grp2
+          laplateformeio/mediatheque_toulouse_grp3
+          laplateformeio/mediatheque_toulouse_grp4
+          laplateformeio/mediatheque_toulouse_grp5
+          laplateformeio/mediatheque_toulouse_grp6
+          laplateformeio/mediatheque_toulouse_grp7
+          "
+
           repos=$(gh api --paginate "/user/repos?per_page=100&affiliation=owner,collaborator,organization_member" \
             --jq '.[] | .full_name')
 
@@ -39,6 +50,12 @@ jobs:
           echo "----------------------------------------"
 
           for repo in $repos; do
+            if echo "$EXCLUDED_REPOS" | grep -qx "          $repo"; then
+              echo "Skipping excluded repo: $repo"
+              echo "----------------------------------------"
+              continue
+            fi
+
             echo "Checking $repo"
 
             folder=$(echo "$repo" | tr '/' '_')
