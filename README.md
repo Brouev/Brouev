@@ -96,7 +96,7 @@ Fonctionnalités :
 ## Contact
 
 LinkedIn  
-https://linkedin.com/in/célia-charlot  
+www.linkedin.com/in/célia-charlot-43b1b2236
 
 GitHub  
 https://github.com/Brouev
