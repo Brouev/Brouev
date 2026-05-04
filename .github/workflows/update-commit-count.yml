@@ -1,6 +1,7 @@
 name: Update commit count
 
 on:
+  push:
   workflow_dispatch:
   schedule:
     - cron: "0 8 * * *"
@@ -20,7 +21,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
           GITHUB_USERNAME: Brouev
-          AUTHOR_PATTERN: "c.charlot333@gmail.com|Brouev|Célia|Celia"
+          AUTHOR_PATTERN: "c.charlot333@gmail.com|Brouev|Celia|Célia"
         run: |
           set -e
 
@@ -29,36 +30,36 @@ jobs:
 
           TOTAL=0
 
-          repos=$(gh api --paginate "/user/repos?per_page=100&affiliation=owner,collaborator" \
-            --jq '.[] | select(.fork == false) | .full_name')
+          repos=$(gh api --paginate "/user/repos?per_page=100&affiliation=owner,collaborator" --jq '.[] | select(.fork == false) | .full_name')
 
           for repo in $repos; do
             echo "Checking $repo"
 
             folder=$(echo "$repo" | tr '/' '_')
 
-            git clone --quiet "https://x-access-token:${GH_TOKEN}@github.com/${repo}.git" "$folder" || continue
+            if git clone --quiet "https://x-access-token:${GH_TOKEN}@github.com/${repo}.git" "$folder"; then
+              cd "$folder"
 
-            cd "$folder"
+              count=$(git log --all --author="$AUTHOR_PATTERN" --oneline | wc -l | tr -d ' ')
+              echo "$repo: $count commits"
 
-            count=$(git log --all --author="$AUTHOR_PATTERN" --oneline | wc -l | tr -d ' ')
+              TOTAL=$((TOTAL + count))
 
-            echo "$repo: $count commits"
-
-            TOTAL=$((TOTAL + count))
-
-            cd ..
+              cd ..
+            else
+              echo "Could not clone $repo"
+            fi
           done
 
-          echo "TOTAL_COMMITS=$TOTAL" >> $GITHUB_ENV
+          echo "TOTAL_COMMITS=$TOTAL" >> "$GITHUB_ENV"
 
       - name: Update README
         run: |
-          python3 << 'PY'
+          python3 - <<'PY'
           import os
           from pathlib import Path
 
-          total = os.environ["TOTAL_COMMITS"]
+          total = os.environ.get("TOTAL_COMMITS", "0")
 
           readme_path = Path("README.md")
           content = readme_path.read_text(encoding="utf-8")
@@ -66,9 +67,14 @@ jobs:
           start = "<!-- COMMIT-COUNT:START -->"
           end = "<!-- COMMIT-COUNT:END -->"
 
-          new_block = f"""{start}
-![Commits](https://img.shields.io/badge/Commits-{total}-blue?style=for-the-badge&logo=github)
-{end}"""
+          if start not in content or end not in content:
+              raise SystemExit("Commit count markers not found in README.md")
+
+          new_block = (
+              f"{start}\n"
+              f"![Commits](https://img.shields.io/badge/Commits-{total}-blue?style=for-the-badge&logo=github)\n"
+              f"{end}"
+          )
 
           before = content.split(start)[0]
           after = content.split(end)[1]
