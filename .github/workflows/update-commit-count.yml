@@ -24,6 +24,13 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Sync with latest main
+        run: |
+          git fetch origin main
+          git checkout main
+          git reset --hard origin/main
 
       - name: Count commits across selected repositories
         env:
@@ -131,7 +138,7 @@ jobs:
 
           new_block = (
               f"{start}\n"
-              f"![Commits](https://img.shields.io/badge/Commits-{total}-blue?style=for-the-badge&logo=github)\n"
+              f"![Commits](https://img.shields.io/badge/Commits-{total}-blue?style=for-the-badge&logo=github&cacheSeconds=3600)\n"
               f"{end}"
           )
 
@@ -152,6 +159,5 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Update commit count"
-            git pull --rebase origin main
-            git push
+            git push origin main
           fi
