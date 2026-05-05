@@ -138,7 +138,7 @@ jobs:
 
           new_block = (
               f"{start}\n"
-              f"![Commits](https://img.shields.io/badge/Commits-{total}-blue?style=for-the-badge&logo=github&cacheSeconds=3600)\n"
+              f"![Commits](https://img.shields.io/badge/Commits-{total}-F4A7B9?style=for-the-badge&logo=github&logoColor=white&cacheSeconds=3600)\n"
               f"{end}"
           )
 
