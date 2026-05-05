@@ -1,4 +1,6 @@
-# Célia Charlot
+# Hi, I'm Célia 🌷
+
+### Web developer in training · Cloud & DevOps enthusiast
 
 Développeuse web en formation, intéressée par le Cloud, le DevOps et le développement applicatif.
 
@@ -6,91 +8,104 @@ Je travaille principalement sur des projets web full-stack et je m’intéresse 
 
 ---
 
-## Tech Stack
+## ✨ About me
 
-![HTML](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS](https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-
-![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
-![Symfony](https://img.shields.io/badge/Symfony-000000?style=for-the-badge&logo=symfony&logoColor=white)
-
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)
-
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+- Développeuse web en formation
+- Future étudiante en Bachelor 3 Systèmes, Réseaux et Cloud Computing
+- Intéressée par le Cloud, le DevOps et le DevSecOps
+- Expérience sur des projets full-stack avec authentification, CRUD, bases de données et déploiement
+- En montée en compétences sur Java, Angular, Python, réseaux et pratiques DevOps
 
 ---
 
-## Learning
+## 🛠️ Tech Stack
 
-![Java](https://img.shields.io/badge/Java-En%20cours%20d'apprentissage-red?style=for-the-badge&logo=openjdk&logoColor=white)
-![Angular](https://img.shields.io/badge/Angular-En%20cours%20d'apprentissage-DD0031?style=for-the-badge&logo=angular&logoColor=white)
-![Python](https://img.shields.io/badge/Python-En%20cours%20d'apprentissage-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Cloud](https://img.shields.io/badge/Cloud%20Computing-En%20cours%20d'apprentissage-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
-![DevOps](https://img.shields.io/badge/DevOps-En%20cours%20d'apprentissage-0A66C2?style=for-the-badge)
+### Frontend
+
+![HTML](https://img.shields.io/badge/HTML-F4A7B9?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS-CBA6F7?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F9E2AF?style=for-the-badge&logo=javascript&logoColor=black)
+
+### Backend
+
+![PHP](https://img.shields.io/badge/PHP-B4BEFE?style=for-the-badge&logo=php&logoColor=white)
+![Symfony](https://img.shields.io/badge/Symfony-313244?style=for-the-badge&logo=symfony&logoColor=white)
+
+### Database
+
+![MySQL](https://img.shields.io/badge/MySQL-89B4FA?style=for-the-badge&logo=mysql&logoColor=white)
+![MariaDB](https://img.shields.io/badge/MariaDB-94E2D5?style=for-the-badge&logo=mariadb&logoColor=white)
+
+### Cloud & DevOps
+
+![Docker](https://img.shields.io/badge/Docker-74C7EC?style=for-the-badge&logo=docker&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F38BA8?style=for-the-badge&logo=git&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FAB387?style=for-the-badge&logo=linux&logoColor=black)
 
 ---
-## GitHub Activity
+
+## 🌱 Currently learning
+
+![Java](https://img.shields.io/badge/Java-Learning-F38BA8?style=for-the-badge&logo=openjdk&logoColor=white)
+![Angular](https://img.shields.io/badge/Angular-Learning-F5C2E7?style=for-the-badge&logo=angular&logoColor=white)
+![Python](https://img.shields.io/badge/Python-Learning-89B4FA?style=for-the-badge&logo=python&logoColor=white)
+![Cloud Computing](https://img.shields.io/badge/Cloud%20Computing-Learning-CBA6F7?style=for-the-badge&logo=googlecloud&logoColor=white)
+![DevOps](https://img.shields.io/badge/DevOps-Learning-94E2D5?style=for-the-badge)
+
+---
+
+## 📈 GitHub Activity
 
 <!-- COMMIT-COUNT:START -->
-![Commits](https://img.shields.io/badge/Commits-1119-blue?style=for-the-badge&logo=github&cacheSeconds=3600)
+![Commits](https://img.shields.io/badge/Commits-1119-F4A7B9?style=for-the-badge&logo=github&logoColor=white&cacheSeconds=3600)
 <!-- COMMIT-COUNT:END -->
 
 - Projets orientés développement web full-stack, conteneurisation, Git, Linux et déploiement d’applications
 
 ---
-## Projects
 
-### Web application | Full-stack
+## 💻 Projects
+
+### Full-stack web application
 
 Application web avec authentification des utilisateurs, gestion des rôles et base de données relationnelle.
 
-Technologies :
+**Technologies**
 - PHP
 - Symfony
 - MySQL / MariaDB
 - JavaScript
 - HTML / CSS
 
-Fonctionnalités :
-- gestion des utilisateurs
-- authentification
-- opérations CRUD
-- structuration d'une base de données relationnelle
+**Fonctionnalités**
+- Authentification
+- Gestion des utilisateurs
+- Opérations CRUD
+- Structuration d’une base de données relationnelle
 
 ---
 
 ### Dockerized web deployment
 
-Déploiement d'une application web conteneurisée avec Docker.
+Déploiement d’une application web conteneurisée avec Docker.
 
-Technologies :
+**Technologies**
 - Docker
 - Linux
 - Git
 
-Fonctionnalités :
-- conteneurisation de l'application
-- configuration de l'environnement
-- déploiement avec Docker
-- versioning avec Git
+**Fonctionnalités**
+- Conteneurisation de l’application
+- Configuration de l’environnement
+- Déploiement avec Docker
+- Versioning avec Git
 
 ---
 
-## Currently learning
+## 🎯 Current focus
 
-- Java
-- Angular
-- Python
-- Cloud computing
-- DevOps practices
-- Networking fundamentals
-
----
-
+```txt
+Cloud · DevOps · Linux · Docker · CI/CD · Security basics
 ## Contact
 
 LinkedIn  
