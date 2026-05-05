@@ -22,42 +22,42 @@ Je travaille principalement sur des projets web full-stack et je m’intéresse 
 
 ### Frontend
 
-![HTML](https://img.shields.io/badge/HTML-F4A7B9?style=for-the-badge&logo=html5&logoColor=white)
-![CSS](https://img.shields.io/badge/CSS-CBA6F7?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F9E2AF?style=for-the-badge&logo=javascript&logoColor=black)
+![HTML](https://img.shields.io/badge/HTML-E75480?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS-9B5DE5?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-FEE440?style=for-the-badge&logo=javascript&logoColor=1F2937)
 
 ### Backend
 
-![PHP](https://img.shields.io/badge/PHP-B4BEFE?style=for-the-badge&logo=php&logoColor=white)
-![Symfony](https://img.shields.io/badge/Symfony-313244?style=for-the-badge&logo=symfony&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-9B5DE5?style=for-the-badge&logo=php&logoColor=white)
+![Symfony](https://img.shields.io/badge/Symfony-1F2937?style=for-the-badge&logo=symfony&logoColor=white)
 
 ### Database
 
-![MySQL](https://img.shields.io/badge/MySQL-89B4FA?style=for-the-badge&logo=mysql&logoColor=white)
-![MariaDB](https://img.shields.io/badge/MariaDB-94E2D5?style=for-the-badge&logo=mariadb&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-00BBF9?style=for-the-badge&logo=mysql&logoColor=white)
+![MariaDB](https://img.shields.io/badge/MariaDB-00F5D4?style=for-the-badge&logo=mariadb&logoColor=1F2937)
 
 ### Cloud & DevOps
 
-![Docker](https://img.shields.io/badge/Docker-74C7EC?style=for-the-badge&logo=docker&logoColor=white)
-![Git](https://img.shields.io/badge/Git-F38BA8?style=for-the-badge&logo=git&logoColor=white)
-![Linux](https://img.shields.io/badge/Linux-FAB387?style=for-the-badge&logo=linux&logoColor=black)
+![Docker](https://img.shields.io/badge/Docker-00BBF9?style=for-the-badge&logo=docker&logoColor=white)
+![Git](https://img.shields.io/badge/Git-E75480?style=for-the-badge&logo=git&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FEE440?style=for-the-badge&logo=linux&logoColor=1F2937)
 
 ---
 
 ## 🌱 Currently learning
 
-![Java](https://img.shields.io/badge/Java-Learning-F38BA8?style=for-the-badge&logo=openjdk&logoColor=white)
-![Angular](https://img.shields.io/badge/Angular-Learning-F5C2E7?style=for-the-badge&logo=angular&logoColor=white)
-![Python](https://img.shields.io/badge/Python-Learning-89B4FA?style=for-the-badge&logo=python&logoColor=white)
-![Cloud Computing](https://img.shields.io/badge/Cloud%20Computing-Learning-CBA6F7?style=for-the-badge&logo=googlecloud&logoColor=white)
-![DevOps](https://img.shields.io/badge/DevOps-Learning-94E2D5?style=for-the-badge)
+![Java](https://img.shields.io/badge/Java-Learning-E75480?style=for-the-badge&logo=openjdk&logoColor=white)
+![Angular](https://img.shields.io/badge/Angular-Learning-E75480?style=for-the-badge&logo=angular&logoColor=white)
+![Python](https://img.shields.io/badge/Python-Learning-00BBF9?style=for-the-badge&logo=python&logoColor=white)
+![Cloud Computing](https://img.shields.io/badge/Cloud%20Computing-Learning-9B5DE5?style=for-the-badge&logo=googlecloud&logoColor=white)
+![DevOps](https://img.shields.io/badge/DevOps-Learning-00F5D4?style=for-the-badge&logoColor=1F2937)
 
 ---
 
 ## 📈 GitHub Activity
 
 <!-- COMMIT-COUNT:START -->
-![Commits](https://img.shields.io/badge/Commits-1119-F4A7B9?style=for-the-badge&logo=github&logoColor=white&cacheSeconds=3600)
+![Commits](https://img.shields.io/badge/Commits-1119-E75480?style=for-the-badge&logo=github&logoColor=white&cacheSeconds=3600)
 <!-- COMMIT-COUNT:END -->
 
 - Projets orientés développement web full-stack, conteneurisation, Git, Linux et déploiement d’applications
@@ -102,14 +102,13 @@ Déploiement d’une application web conteneurisée avec Docker.
 
 ---
 
-## 🎯 Current focus
+## 🚀 Next steps
 
-```txt
-Cloud · DevOps · Linux · Docker · CI/CD · Security basics
-## Contact
+Je continue à renforcer mes compétences en développement applicatif, Cloud et DevOps, avec une progression vers les environnements systèmes, réseaux, sécurité applicative et infrastructures.
 
-LinkedIn  
-www.linkedin.com/in/célia-charlot-43b1b2236
+---
 
-GitHub  
-https://github.com/Brouev
+## 📫 Contact
+
+[LinkedIn](https://www.linkedin.com/in/célia-charlot-43b1b2236)  
+[GitHub](https://github.com/Brouev)
