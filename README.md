@@ -36,7 +36,7 @@ Je travaille principalement sur des projets web full-stack et je m’intéresse 
 ## GitHub Activity
 
 <!-- COMMIT-COUNT:START -->
-![Commits](https://img.shields.io/badge/Commits-calcul%20en%20cours-blue?style=for-the-badge&logo=github)
+![Commits](https://img.shields.io/badge/Commits-1119-blue?style=for-the-badge&logo=github&cacheSeconds=3600)
 <!-- COMMIT-COUNT:END -->
 
 - Projets orientés développement web full-stack, conteneurisation, Git, Linux et déploiement d’applications
