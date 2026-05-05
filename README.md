@@ -42,15 +42,6 @@ Je travaille principalement sur des projets web full-stack et je m’intéresse 
 - Projets orientés développement web full-stack, conteneurisation, Git, Linux et déploiement d’applications
 
 ---
-
-## GitHub Stats
-
-<p align="center">
-  <img src="https://github-readme-stats-pi-lime-89.vercel.app/api?username=Brouev&show_icons=true&count_private=true&include_all_commits=true&hide=commits" height="165" alt="GitHub stats de Célia" />
-  &nbsp;&nbsp;&nbsp;
-  <img src="https://github-readme-stats-pi-lime-89.vercel.app/api/top-langs/?username=Brouev&layout=compact&count_private=true" height="165" alt="Langages les plus utilisés par Célia" />
-</p>
-
 ## Projects
 
 ### Web application | Full-stack
