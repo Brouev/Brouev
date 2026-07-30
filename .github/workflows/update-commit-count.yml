@@ -1,15 +1,17 @@
-name: Update commit count
+name: Update personal commit count
 
 on:
   workflow_dispatch:
+
   schedule:
+    # Exécution quotidienne à 08:00 UTC
     - cron: "0 8 * * *"
 
 permissions:
   contents: write
 
 concurrency:
-  group: update-commit-count
+  group: update-personal-commit-count
   cancel-in-progress: true
 
 env:
@@ -25,102 +27,219 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.event.repository.default_branch }}
 
-      - name: Sync with latest main
+      - name: Synchronize profile repository
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
-          git fetch origin main
-          git checkout main
-          git reset --hard origin/main
+          set -euo pipefail
 
-      - name: Count commits across selected repositories
+          git fetch origin "$DEFAULT_BRANCH"
+          git checkout "$DEFAULT_BRANCH"
+          git reset --hard "origin/$DEFAULT_BRANCH"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check required configuration
+        env:
+          GH_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
+          TARGET_USERNAME: ${{ vars.COMMIT_USERNAME }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "::error::Le secret GH_STATS_TOKEN est manquant."
+            exit 1
+          fi
+
+          if [ -z "${TARGET_USERNAME:-}" ]; then
+            echo "::error::La variable COMMIT_USERNAME est manquante."
+            exit 1
+          fi
+
+      - name: Retrieve accessible repositories
         env:
           GH_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
         run: |
-          set -e
+          set -euo pipefail
 
-          mkdir -p /tmp/repos
-          cd /tmp/repos
+          WORK_DIR="$RUNNER_TEMP/commit-count"
 
-          TOTAL=0
+          rm -rf "$WORK_DIR"
+          mkdir -p "$WORK_DIR/repos"
 
-          repos=$(gh api --paginate "/user/repos?per_page=100&affiliation=owner,collaborator,organization_member" \
-            --jq '.[] | .full_name')
+          gh api \
+            --paginate \
+            "/user/repos?per_page=100&affiliation=owner,collaborator,organization_member" \
+            --jq '.[].full_name' \
+            | sort -u \
+            > "$WORK_DIR/repositories.txt"
 
-          echo "Repositories found:"
-          echo "$repos"
-          echo "----------------------------------------"
+          REPOSITORY_COUNT="$(
+            wc -l < "$WORK_DIR/repositories.txt" | tr -d ' '
+          )"
 
-          should_skip_repo() {
-            repo="$1"
+          echo "$REPOSITORY_COUNT dépôts accessibles trouvés."
 
-            case "$repo" in
-              *github-readme-stats*)
-                return 0
-                ;;
-              laplateformeio/mediatheque_toulouse_grp1)
-                return 0
-                ;;
-              laplateformeio/mediatheque_toulouse_grp2)
-                return 0
-                ;;
-              laplateformeio/mediatheque_toulouse_grp3)
-                return 0
-                ;;
-              laplateformeio/mediatheque_toulouse_grp4)
-                return 0
-                ;;
-              laplateformeio/mediatheque_toulouse_grp5)
-                return 0
-                ;;
-              laplateformeio/mediatheque_toulouse_grp6)
-                return 0
-                ;;
-              laplateformeio/mediatheque_toulouse_grp7)
-                return 0
-                ;;
-              *)
-                return 1
-                ;;
-            esac
-          }
+          echo "WORK_DIR=$WORK_DIR" >> "$GITHUB_ENV"
 
-          for repo in $repos; do
-            echo "Repo detected: [$repo]"
+      - name: Clone repositories and retrieve commits
+        env:
+          GH_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
+        run: |
+          set -euo pipefail
 
-            if should_skip_repo "$repo"; then
-              echo "Skipping excluded repo: $repo"
-              echo "----------------------------------------"
+          ALL_COMMITS_FILE="$WORK_DIR/all-commits.txt"
+
+          touch "$ALL_COMMITS_FILE"
+
+          while IFS= read -r repository; do
+            if [ -z "$repository" ]; then
               continue
             fi
 
-            echo "Checking $repo"
+            echo "--------------------------------------------------"
+            echo "Analyse de $repository"
 
-            folder=$(echo "$repo" | tr '/' '_')
+            safe_name="$(
+              printf '%s' "$repository" | tr '/:' '__'
+            )"
 
-            if git clone --quiet "https://x-access-token:${GH_TOKEN}@github.com/${repo}.git" "$folder"; then
-              cd "$folder"
+            repository_path="$WORK_DIR/repos/$safe_name.git"
 
-              git fetch --all --quiet --tags
+            if gh repo clone "$repository" "$repository_path" -- \
+              --mirror \
+              --filter=blob:none \
+              --quiet
+            then
+              git \
+                --git-dir="$repository_path" \
+                log \
+                --all \
+                --format='%H%x09%ae' \
+                >> "$ALL_COMMITS_FILE"
 
-              count=$(git rev-list --all --count)
-
-              echo "$repo: $count commits"
-
-              TOTAL=$((TOTAL + count))
-
-              cd ..
+              rm -rf "$repository_path"
             else
-              echo "Could not clone $repo"
+              echo "::warning::Impossible de cloner $repository"
             fi
+          done < "$WORK_DIR/repositories.txt"
 
-            echo "----------------------------------------"
-          done
-
-          echo "TOTAL_COMMITS=$TOTAL"
-          echo "TOTAL_COMMITS=$TOTAL" >> "$GITHUB_ENV"
-
-      - name: Update README
+      - name: Count personal commits
+        env:
+          TARGET_USERNAME: ${{ vars.COMMIT_USERNAME }}
+          COMMIT_EMAILS: ${{ secrets.COMMIT_EMAILS }}
         run: |
+          set -euo pipefail
+
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+
+          work_dir = Path(os.environ["WORK_DIR"])
+          commits_file = work_dir / "all-commits.txt"
+
+          username = (
+              os.environ.get("TARGET_USERNAME", "")
+              .strip()
+              .lower()
+          )
+
+          raw_emails = os.environ.get("COMMIT_EMAILS", "")
+
+          normalized_emails = raw_emails.replace(";", ",")
+          normalized_emails = normalized_emails.replace("\n", ",")
+          normalized_emails = normalized_emails.replace(" ", ",")
+
+          configured_emails = set()
+
+          for email in normalized_emails.split(","):
+              normalized_email = email.strip().lower()
+
+              if normalized_email:
+                  configured_emails.add(normalized_email)
+
+          standard_noreply_email = (
+              f"{username}@users.noreply.github.com"
+          )
+
+          matching_commits = set()
+
+          if commits_file.exists():
+              lines = commits_file.read_text(
+                  encoding="utf-8",
+                  errors="replace",
+              ).splitlines()
+          else:
+              lines = []
+
+          for line in lines:
+              parts = line.split("\t", 1)
+
+              if len(parts) != 2:
+                  continue
+
+              commit_sha = parts[0].strip()
+              author_email = parts[1].strip().lower()
+
+              if not commit_sha or not author_email:
+                  continue
+
+              is_configured_email = (
+                  author_email in configured_emails
+              )
+
+              is_standard_noreply = (
+                  author_email == standard_noreply_email
+              )
+
+              is_numbered_noreply = (
+                  author_email.endswith(
+                      f"+{standard_noreply_email}"
+                  )
+              )
+
+              if (
+                  is_configured_email
+                  or is_standard_noreply
+                  or is_numbered_noreply
+              ):
+                  matching_commits.add(commit_sha)
+
+          total_commits = len(matching_commits)
+
+          github_env = Path(os.environ["GITHUB_ENV"])
+
+          with github_env.open(
+              "a",
+              encoding="utf-8",
+          ) as env_file:
+              env_file.write(
+                  f"TOTAL_COMMITS={total_commits}\n"
+              )
+
+          print(
+              f"Username analysé : {username}"
+          )
+
+          print(
+              "Adresses supplémentaires configurées : "
+              f"{len(configured_emails)}"
+          )
+
+          print(
+              f"Commits personnels uniques : {total_commits}"
+          )
+          PY
+
+      - name: Update README badge
+        run: |
+          set -euo pipefail
+
           python3 - <<'PY'
           import os
           from pathlib import Path
@@ -128,36 +247,93 @@ jobs:
           total = os.environ.get("TOTAL_COMMITS", "0")
 
           readme_path = Path("README.md")
-          content = readme_path.read_text(encoding="utf-8")
 
-          start = "<!-- COMMIT-COUNT:START -->"
-          end = "<!-- COMMIT-COUNT:END -->"
+          if not readme_path.exists():
+              raise SystemExit(
+                  "Le fichier README.md est introuvable."
+              )
 
-          if start not in content or end not in content:
-              raise SystemExit("Commit count markers not found in README.md")
-
-          new_block = (
-              f"{start}\n"
-              f"![Commits](https://img.shields.io/badge/Commits-{total}-F4A7B9?style=for-the-badge&logo=github&logoColor=white&cacheSeconds=3600)\n"
-              f"{end}"
+          content = readme_path.read_text(
+              encoding="utf-8"
           )
 
-          before = content.split(start)[0]
-          after = content.split(end)[1]
+          start_marker = "<!-- COMMIT-COUNT:START -->"
+          end_marker = "<!-- COMMIT-COUNT:END -->"
 
-          readme_path.write_text(before + new_block + after, encoding="utf-8")
+          if start_marker not in content:
+              raise SystemExit(
+                  "Le marqueur COMMIT-COUNT:START "
+                  "est introuvable dans README.md."
+              )
+
+          if end_marker not in content:
+              raise SystemExit(
+                  "Le marqueur COMMIT-COUNT:END "
+                  "est introuvable dans README.md."
+              )
+
+          start_index = content.index(start_marker)
+
+          end_index = (
+              content.index(
+                  end_marker,
+                  start_index,
+              )
+              + len(end_marker)
+          )
+
+          badge = (
+              f"{start_marker}\n"
+              f"![Commits]"
+              f"(https://img.shields.io/badge/"
+              f"Commits-{total}-F4A7B9"
+              f"?style=for-the-badge"
+              f"&logo=github"
+              f"&logoColor=white"
+              f"&cacheSeconds=3600)\n"
+              f"{end_marker}"
+          )
+
+          updated_content = (
+              content[:start_index]
+              + badge
+              + content[end_index:]
+          )
+
+          readme_path.write_text(
+              updated_content,
+              encoding="utf-8",
+          )
+
+          print(
+              f"README mis à jour avec {total} commits."
+          )
           PY
 
       - name: Commit README update
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          set -euo pipefail
+
+          git config \
+            user.name \
+            "github-actions[bot]"
+
+          git config \
+            user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add README.md
 
           if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Update commit count"
-            git push origin main
+            echo "Aucune modification à enregistrer."
+            exit 0
           fi
+
+          git commit \
+            -m "chore: update personal commit count"
+
+          git push \
+            origin \
+            "HEAD:$DEFAULT_BRANCH"
