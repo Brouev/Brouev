@@ -64,7 +64,7 @@ Mes futures missions porteront notamment sur le **NetDevOps, les accès Internet
 ## 📈 GitHub Activity
 
 <!-- COMMIT-COUNT:START -->
-![Commits](https://img.shields.io/badge/Commits-637-F4A7B9?style=for-the-badge&logo=github&logoColor=white&cacheSeconds=3600)
+![Commits](https://img.shields.io/badge/Commits-651-F4A7B9?style=for-the-badge&logo=github&logoColor=white&cacheSeconds=3600)
 <!-- COMMIT-COUNT:END -->
 
 * Projets orientés développement web full-stack, API REST, conteneurisation, Linux, déploiement et automatisation
